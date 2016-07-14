@@ -7,7 +7,15 @@
 //
 
 import UIKit
+import MapKit
 
 class ParseClient: NSObject {
-
+    
+    // Shared Session
+    var session = NSURLSession.sharedSession()
+    
+    // Place to store recieved data
+    var annotations = [MKPointAnnotation]()
+    var studentArray = [StudentInformation]()
+    
 }

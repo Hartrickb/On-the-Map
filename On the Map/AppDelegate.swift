@@ -15,8 +15,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
     
-    var annotations = [MKPointAnnotation]()
-    var studentArray = [StudentInformation]()
     var student = StudentInformation()
     
     var userID: String?
