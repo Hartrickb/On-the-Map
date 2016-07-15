@@ -27,6 +27,8 @@
 		91D8EB851D3544780041998E /* StudentInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91D8EB841D3544780041998E /* StudentInformation.swift */; };
 		91D8EB871D3814D00041998E /* GCDBlackBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91D8EB861D3814D00041998E /* GCDBlackBox.swift */; };
 		91D8EB8A1D3816000041998E /* ParseClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91D8EB891D3816000041998E /* ParseClient.swift */; };
+		91D8EB901D3942480041998E /* ParseConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91D8EB8F1D3942480041998E /* ParseConstants.swift */; };
+		91D8EB921D395CC00041998E /* ParseConvenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91D8EB911D395CC00041998E /* ParseConvenience.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -73,6 +75,8 @@
 		91D8EB841D3544780041998E /* StudentInformation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StudentInformation.swift; sourceTree = "<group>"; };
 		91D8EB861D3814D00041998E /* GCDBlackBox.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GCDBlackBox.swift; sourceTree = "<group>"; };
 		91D8EB891D3816000041998E /* ParseClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParseClient.swift; sourceTree = "<group>"; };
+		91D8EB8F1D3942480041998E /* ParseConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParseConstants.swift; sourceTree = "<group>"; };
+		91D8EB911D395CC00041998E /* ParseConvenience.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParseConvenience.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -193,6 +197,8 @@
 			isa = PBXGroup;
 			children = (
 				91D8EB891D3816000041998E /* ParseClient.swift */,
+				91D8EB8F1D3942480041998E /* ParseConstants.swift */,
+				91D8EB911D395CC00041998E /* ParseConvenience.swift */,
 			);
 			name = Parse;
 			sourceTree = "<group>";
@@ -339,6 +345,8 @@
 				91D8EB7B1D3005E90041998E /* InformationPostingViewController.swift in Sources */,
 				913FC4571D26B2A10013CF6E /* On_the_Map.xcdatamodeld in Sources */,
 				913FC44F1D26B2A10013CF6E /* AppDelegate.swift in Sources */,
+				91D8EB901D3942480041998E /* ParseConstants.swift in Sources */,
+				91D8EB921D395CC00041998E /* ParseConvenience.swift in Sources */,
 				91D8EB7D1D3021A80041998E /* SubmitPostingViewController.swift in Sources */,
 				91D8EB831D344B1B0041998E /* ConvenienceFunctions.swift in Sources */,
 				9180A89D1D2C35BF0022898B /* TabBarController.swift in Sources */,

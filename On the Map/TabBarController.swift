@@ -65,8 +65,8 @@ class TabBarController: UITabBarController {
         let pinTableViewController = self.viewControllers![1] as! PinTableViewController
         
         
-        self.appDelegate.annotations.removeAll()
-        self.appDelegate.studentArray.removeAll()
+        ParseClient.sharedInstance().annotations.removeAll()
+        ParseClient.sharedInstance().studentArray.removeAll()
         let annotations = mapViewController.mapView.annotations
         mapViewController.mapView.removeAnnotations(annotations)
         mapViewController.displayPins()
@@ -95,7 +95,7 @@ class TabBarController: UITabBarController {
                 return
             }
             
-            self.appDelegate.studentArray = StudentInformation.studentsFromResults(results)
+            ParseClient.sharedInstance().studentArray = StudentInformation.studentsFromResults(results)
             
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
                 
