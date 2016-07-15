@@ -18,4 +18,8 @@ class ParseClient: NSObject {
     var annotations = [MKPointAnnotation]()
     var studentArray = [StudentInformation]()
     
+    override init() {
+        super.init()
+    }
+    
 }
