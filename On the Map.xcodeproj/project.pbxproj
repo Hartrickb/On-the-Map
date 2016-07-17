@@ -19,7 +19,6 @@
 		9180A89B1D2C2F8D0022898B /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9180A89A1D2C2F8D0022898B /* MapKit.framework */; };
 		9180A89D1D2C35BF0022898B /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9180A89C1D2C35BF0022898B /* TabBarController.swift */; };
 		91D8EB751D2EE29B0041998E /* PinTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91D8EB741D2EE29B0041998E /* PinTableViewController.swift */; };
-		91D8EB791D2EFBA40041998E /* PinConvenienceFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91D8EB781D2EFBA40041998E /* PinConvenienceFunctions.swift */; };
 		91D8EB7B1D3005E90041998E /* InformationPostingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91D8EB7A1D3005E90041998E /* InformationPostingViewController.swift */; };
 		91D8EB7D1D3021A80041998E /* SubmitPostingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91D8EB7C1D3021A80041998E /* SubmitPostingViewController.swift */; };
 		91D8EB7F1D341F2E0041998E /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91D8EB7E1D341F2E0041998E /* StringExtension.swift */; };
@@ -70,7 +69,6 @@
 		9180A89A1D2C2F8D0022898B /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		9180A89C1D2C35BF0022898B /* TabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		91D8EB741D2EE29B0041998E /* PinTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PinTableViewController.swift; path = ../PinTableViewController.swift; sourceTree = "<group>"; };
-		91D8EB781D2EFBA40041998E /* PinConvenienceFunctions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PinConvenienceFunctions.swift; sourceTree = "<group>"; };
 		91D8EB7A1D3005E90041998E /* InformationPostingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InformationPostingViewController.swift; sourceTree = "<group>"; };
 		91D8EB7C1D3021A80041998E /* SubmitPostingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubmitPostingViewController.swift; sourceTree = "<group>"; };
 		91D8EB7E1D341F2E0041998E /* StringExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringExtension.swift; sourceTree = "<group>"; };
@@ -138,7 +136,6 @@
 				913FC44E1D26B2A10013CF6E /* AppDelegate.swift */,
 				91D8EB861D3814D00041998E /* GCDBlackBox.swift */,
 				91D8EB881D3815820041998E /* Controller */,
-				91D8EB781D2EFBA40041998E /* PinConvenienceFunctions.swift */,
 				91D8EB8B1D38160C0041998E /* Model */,
 				913FC4581D26B2A10013CF6E /* Assets.xcassets */,
 				913FC4521D26B2A10013CF6E /* Main.storyboard */,
@@ -370,7 +367,6 @@
 				91D8EB7D1D3021A80041998E /* SubmitPostingViewController.swift in Sources */,
 				91D8EB831D344B1B0041998E /* ConvenienceFunctions.swift in Sources */,
 				9180A89D1D2C35BF0022898B /* TabBarController.swift in Sources */,
-				91D8EB791D2EFBA40041998E /* PinConvenienceFunctions.swift in Sources */,
 				9180A8971D2BFC630022898B /* MapViewController.swift in Sources */,
 				91D8EB871D3814D00041998E /* GCDBlackBox.swift in Sources */,
 			);
