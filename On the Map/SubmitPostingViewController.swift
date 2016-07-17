@@ -17,7 +17,6 @@ class SubmitPostingViewController: UIViewController, MKMapViewDelegate, UITextFi
     
     var userURL = ""
     var userLocation = MKPointAnnotation()
-    let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
     
     
     override func viewDidLoad() {
