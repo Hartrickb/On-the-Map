@@ -14,6 +14,11 @@ extension UdacityClient {
     
     struct Constants {
         static let appJSON = "application/json"
+        
+        static let ApiScheme = "https"
+        static let ApiHost = "www.udacity.com"
+        static let ApiPath = "/api/users"
+        
     }
     
     struct HTTPHeaders {
@@ -25,6 +30,14 @@ extension UdacityClient {
         static let error = "error"
         static let account = "account"
         static let key = "key"
+    }
+    
+    struct ParameterKeys {
+        static let UserID = "userID"
+    }
+    
+    struct JSONKeys {
+        static let user = "user"
     }
     
 }
