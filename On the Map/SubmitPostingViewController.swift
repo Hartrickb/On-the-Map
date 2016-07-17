@@ -26,12 +26,14 @@ class SubmitPostingViewController: UIViewController, MKMapViewDelegate, UITextFi
         userLocationMap.addAnnotation(userLocation)
         userLocationMap.showAnnotations(userLocationMap.annotations, animated: true)
         submitButton.setTitleColor(UIColor.darkGrayColor(), forState: UIControlState.Disabled)
-        submitButton.enabled = false
+        buttonEnabled(button: submitButton, bool: false)
     }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        
+        submitButton.backgroundColor = UIColor.clearColor()
+        submitButton.layer.cornerRadius = 5
+        submitButton.layer.borderWidth = 1.5
     }
     
     @IBAction func submitUserLocationWithURL(sender: AnyObject) {
@@ -82,6 +84,7 @@ class SubmitPostingViewController: UIViewController, MKMapViewDelegate, UITextFi
     func textFieldDidEndEditing(textField: UITextField) {
         guard let url = textField.text else {
             submitButton.enabled = false
+            submitButton.layer.borderColor = UIColor.darkGrayColor().CGColor
             displayError("No URL entered in textfield", viewController: self)
             print("No url entered in urlTextField")
             return
@@ -89,10 +92,20 @@ class SubmitPostingViewController: UIViewController, MKMapViewDelegate, UITextFi
         
         if let userURL = makeValidURLString(url) {
             UdacityClient.sharedInstance().student.mediaURL = userURL
-            submitButton.enabled = true
+            buttonEnabled(button: submitButton, bool: true)
             print(userURL)
         } else {
-            submitButton.enabled = false
+            buttonEnabled(button: submitButton, bool: false)
         }
     }
+    
+    func buttonEnabled(button button: UIButton, bool: Bool) {
+        button.enabled = bool
+        if button.enabled {
+            button.layer.borderColor = UIColor.whiteColor().CGColor
+        } else {
+            button.layer.borderColor = UIColor.darkGrayColor().CGColor
+        }
+    }
+    
 }

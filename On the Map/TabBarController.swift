@@ -71,14 +71,6 @@ class TabBarController: UITabBarController {
         mapViewController.mapView.removeAnnotations(annotations)
         mapViewController.displayPins()
         
-//        if mapViewController.mapView.annotations.isEmpty == false {
-//            let annotations = mapViewController.mapView.annotations
-//            mapViewController.mapView.removeAnnotations(annotations)
-//        }
-        
-//        mapViewController.mapView.removeAnnotations(appDelegate.annotations)
-        
-        
         getStudentPins { (studentData, error) in
             
             let parsedData: AnyObject!
