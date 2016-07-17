@@ -11,36 +11,40 @@ import MapKit
 
 class MapViewController: UIViewController, MKMapViewDelegate {
     
-    var appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-//    var pins: [[String: AnyObject]] {
-//        get {
-//            return appDelegate.pins
-//        } set {
-//            appDelegate.pins = pins
-//        }
-//    }
-    
     @IBOutlet weak var mapView: MKMapView!
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
+        ParseClient.sharedInstance().annotations.removeAll()
+        ParseClient.sharedInstance().studentArray.removeAll()
+        let annotations = mapView.annotations
+        mapView.removeAnnotations(annotations)
         loadPinsForMap()
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-            
-        // Gets student pins and copies them to pinData
+    // Downloads the data from parse and stores it in the ParseClient.StudentArray
+    func loadPinsForMap() {
+        ParseClient.sharedInstance().getStudentLocations { (results, error) in
+            if let results = results {
+                ParseClient.sharedInstance().studentArray = results
+                performUIUpdatesOnMain({
+                    self.displayPins()
+                })
+            } else {
+                self.displayError("\(error)", viewController: self)
+            }
+        }
     }
     
-    
-    
+    // Takes the data returned from loadPinsForMap that is stored in
+    // ParseClient.sharedInstance().studentArray and displays the pins on map
     func displayPins() {
         
         // We will create an MKPointAnnotation for each dictionary in "locations". The
         // point annotations will be stored in this array, and then provided to the map view.
         
-        for student in appDelegate.studentArray {
+        // Converts the array to annotations that the mapView can use
+        for student in ParseClient.sharedInstance().studentArray {
             let lat = CLLocationDegrees(student.lat!)
             let long = CLLocationDegrees(student.long!)
             
@@ -55,13 +59,14 @@ class MapViewController: UIViewController, MKMapViewDelegate {
             annotation.title = "\(first) \(last)"
             annotation.subtitle = mediaURL
             
-            appDelegate.annotations.append(annotation)
+            ParseClient.sharedInstance().annotations.append(annotation)
         }
         
         // When the array is complete, we add the annotations to the map.
-        self.mapView.addAnnotations(appDelegate.annotations)
+        self.mapView.addAnnotations(ParseClient.sharedInstance().annotations)
     }
     
+    // Creates a pin / annotation for the map view
     func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
         
         let reuseId = "pin"
@@ -80,6 +85,8 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         return pinView
     }
     
+    
+    // Opens the url of the pin in Safari
     func mapView(mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
         if control == view.rightCalloutAccessoryView {
             let app = UIApplication.sharedApplication()
@@ -90,33 +97,6 @@ class MapViewController: UIViewController, MKMapViewDelegate {
             }
         }
     }
-    
-    func loadPinsForMap() {
-        
-        getStudentPins({ (studentData, error) in
-            let parsedData: AnyObject!
-            do {
-                parsedData = try NSJSONSerialization.JSONObjectWithData(studentData!, options: .AllowFragments)
-            } catch {
-                print("Could not parse the data as JSON: '\(studentData)")
-                return
-            }
-            
-            // Use the data
-            guard let results = parsedData["results"] as? [[String: AnyObject]] else {
-                print("Unable to find key 'results' in \(parsedData)")
-                return
-            }
-            
-            self.appDelegate.studentArray = StudentInformation.studentsFromResults(results)
-            
-            dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                self.displayPins()
-            })
-            
-        })
-    }
-    
 }
 
 

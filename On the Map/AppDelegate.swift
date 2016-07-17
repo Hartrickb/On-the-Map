@@ -14,12 +14,6 @@ import MapKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-    
-    var annotations = [MKPointAnnotation]()
-    var studentArray = [StudentInformation]()
-    var student = StudentInformation()
-    
-    var userID: String?
 
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {

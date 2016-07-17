@@ -12,8 +12,6 @@ import AddressBookUI
 import MapKit
 
 class InformationPostingViewController: UIViewController, MKMapViewDelegate, UITextFieldDelegate {
-    
-    var appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
 
     @IBOutlet weak var userLocationText: UITextField!
     @IBOutlet weak var findOnMapButton: UIButton!
@@ -26,7 +24,14 @@ class InformationPostingViewController: UIViewController, MKMapViewDelegate, UIT
         self.hideKeyboardWhenTappedAround()
         findOnMapButton.setTitleColor(UIColor.darkGrayColor(), forState: UIControlState.Disabled)
 
-        findOnMapButton.enabled = false
+        buttonEnabled(button: findOnMapButton, bool: false)
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        findOnMapButton.backgroundColor = UIColor.clearColor()
+        findOnMapButton.layer.cornerRadius = 5
+        findOnMapButton.layer.borderWidth = 1.5
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
@@ -63,13 +68,13 @@ class InformationPostingViewController: UIViewController, MKMapViewDelegate, UIT
                 let location = placemark?.location
                 let coordinate = location?.coordinate
                 self.userLocation.coordinate = coordinate!
-                self.appDelegate.student.lat = coordinate?.latitude
-                self.appDelegate.student.long = coordinate?.longitude
+                UdacityClient.sharedInstance().student.lat = coordinate?.latitude
+                UdacityClient.sharedInstance().student.long = coordinate?.longitude
                 print("self.userLocation.coordinate: \(self.userLocation.coordinate)")
                 print("\nlat: \(coordinate?.latitude), long: \(coordinate?.longitude)")
                 self.activityIndicator.stopAnimating()
                 self.userLocationText.enabled = true
-                self.findOnMapButton.enabled = true
+                self.buttonEnabled(button: self.findOnMapButton, bool: true)
             }
         }
     }
@@ -79,7 +84,7 @@ class InformationPostingViewController: UIViewController, MKMapViewDelegate, UIT
             displayError("No text entered", viewController: self)
             print("No text entered")
         } else {
-            appDelegate.student.mapString = textField.text!
+            UdacityClient.sharedInstance().student.mapString = textField.text!
             forwardGeocoding(textField.text!)
         }
     }
@@ -90,6 +95,16 @@ class InformationPostingViewController: UIViewController, MKMapViewDelegate, UIT
     }
     
     func textFieldDidBeginEditing(textField: UITextField) {
-        findOnMapButton.enabled = false
+        buttonEnabled(button: findOnMapButton, bool: false)
     }
+    
+    func buttonEnabled(button button: UIButton, bool: Bool) {
+        button.enabled = bool
+        if button.enabled {
+            button.layer.borderColor = UIColor.whiteColor().CGColor
+        } else {
+            button.layer.borderColor = UIColor.darkGrayColor().CGColor
+        }
+    }
+    
 }

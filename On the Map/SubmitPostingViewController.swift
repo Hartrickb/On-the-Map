@@ -26,31 +26,27 @@ class SubmitPostingViewController: UIViewController, MKMapViewDelegate, UITextFi
         userLocationMap.addAnnotation(userLocation)
         userLocationMap.showAnnotations(userLocationMap.annotations, animated: true)
         submitButton.setTitleColor(UIColor.darkGrayColor(), forState: UIControlState.Disabled)
-        submitButton.enabled = false
+        buttonEnabled(button: submitButton, bool: false)
     }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        
+        submitButton.backgroundColor = UIColor.clearColor()
+        submitButton.layer.cornerRadius = 5
+        submitButton.layer.borderWidth = 1.5
     }
     
     @IBAction func submitUserLocationWithURL(sender: AnyObject) {
-        let request = NSMutableURLRequest(URL: NSURL(string: "https://api.parse.com/1/classes/StudentLocation")!)
-        request.HTTPMethod = "POST"
-        request.addValue("QrX47CA9cyuGewLdsL7o5Eb8iug6Em8ye0dnAbIr", forHTTPHeaderField: "X-Parse-Application-Id")
-        request.addValue("QuWThTdiRmTux3YaDseUSEpUKo7aBYM737yKd4gY", forHTTPHeaderField: "X-Parse-REST-API-Key")
-        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.HTTPBody = "{\"uniqueKey\": \"\(appDelegate.student.id)\", \"firstName\": \"\(appDelegate.student.firstName)\", \"lastName\": \"\(appDelegate.student.lastName)\",\"mapString\": \"\(appDelegate.student.mapString!)\", \"mediaURL\": \"\(appDelegate.student.mediaURL!)\",\"latitude\": \(appDelegate.student.lat!), \"longitude\": \(appDelegate.student.long!)}".dataUsingEncoding(NSUTF8StringEncoding)
-        let session = NSURLSession.sharedSession()
-        let task = session.dataTaskWithRequest(request) { data, response, error in
-            if error != nil {
-                return
-            }
-            print(NSString(data: data!, encoding: NSUTF8StringEncoding))
-        }
-        task.resume()
-        performSegueWithIdentifier("submit", sender: sender)
         
+        let student = UdacityClient.sharedInstance().student
+        
+        ParseClient.sharedInstance().postStudentLocationForStudent(student) { (success, error) in
+            if success {
+                self.performSegueWithIdentifier("submit", sender: sender)
+            } else {
+                self.displayError("\(error)", viewController: self)
+            }
+        }
     }
     
     func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
@@ -88,17 +84,28 @@ class SubmitPostingViewController: UIViewController, MKMapViewDelegate, UITextFi
     func textFieldDidEndEditing(textField: UITextField) {
         guard let url = textField.text else {
             submitButton.enabled = false
+            submitButton.layer.borderColor = UIColor.darkGrayColor().CGColor
             displayError("No URL entered in textfield", viewController: self)
             print("No url entered in urlTextField")
             return
         }
         
         if let userURL = makeValidURLString(url) {
-            appDelegate.student.mediaURL = userURL
-            submitButton.enabled = true
+            UdacityClient.sharedInstance().student.mediaURL = userURL
+            buttonEnabled(button: submitButton, bool: true)
             print(userURL)
         } else {
-            submitButton.enabled = false
+            buttonEnabled(button: submitButton, bool: false)
         }
     }
+    
+    func buttonEnabled(button button: UIButton, bool: Bool) {
+        button.enabled = bool
+        if button.enabled {
+            button.layer.borderColor = UIColor.whiteColor().CGColor
+        } else {
+            button.layer.borderColor = UIColor.darkGrayColor().CGColor
+        }
+    }
+    
 }
