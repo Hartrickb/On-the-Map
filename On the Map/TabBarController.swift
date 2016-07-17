@@ -10,29 +10,31 @@ import UIKit
 
 class TabBarController: UITabBarController {
     
-    let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
     
     @IBAction func logoutButton(sender: AnyObject) {
         
+        let activityView = UIActivityIndicatorView(activityIndicatorStyle: .WhiteLarge)
+        activityView.color = UIColor.blackColor()
+        activityView.hidesWhenStopped = true
+        activityView.center = self.view.center
+        performUIUpdatesOnMain({
+            activityView.startAnimating()
+            self.view.addSubview(activityView)
+        })
+        
         UdacityClient.sharedInstance().deleteSession { (success, error) in
+            
             if success {
                 performUIUpdatesOnMain({ 
                     let controller = self.storyboard!.instantiateViewControllerWithIdentifier("LoginScreen")
                     self.presentViewController(controller, animated: true, completion: nil)
                 })
             } else {
-                self.displayError("Error: \(error)", viewController: self)
+                performUIUpdatesOnMain({ 
+                    activityView.stopAnimating()
+                    self.displayError("Error: \(error)", viewController: self)
+                })
             }
         }
     }
