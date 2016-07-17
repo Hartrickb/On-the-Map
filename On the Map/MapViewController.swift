@@ -27,14 +27,12 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         ParseClient.sharedInstance().getStudentLocations { (results, error) in
             if let results = results {
                 ParseClient.sharedInstance().studentArray = results
+                performUIUpdatesOnMain({
+                    self.displayPins()
+                })
             } else {
                 self.displayError("\(error)", viewController: self)
             }
-            
-            performUIUpdatesOnMain({
-                self.displayPins()
-            })
-            
         }
     }
     
