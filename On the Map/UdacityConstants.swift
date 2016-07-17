@@ -38,6 +38,8 @@ extension UdacityClient {
     
     struct JSONKeys {
         static let user = "user"
+        static let id = "id"
+        static let session = "session"
     }
     
 }

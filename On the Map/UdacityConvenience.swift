@@ -74,6 +74,32 @@ extension UdacityClient {
             }
         }
     }
+    
+    func deleteSession(completionHandlerForDeleteSession: (success: Bool, error: NSError?) -> Void) {
+        
+        /* 1. Specify parameters, method (if has {key}), and HTTP body (if POST) */
+        // There are none...
+        
+        /* 2. Make the request */
+        taskForDELETEMethod { (results, error) in
+            if let error = error {
+                print("Post error: \(error)")
+                completionHandlerForDeleteSession(success: false, error: error)
+            } else {
+                guard let session = results[JSONKeys.session] as? [String: AnyObject] else {
+                    print("No key '\(JSONKeys.session)' in \(results)")
+                    return
+                }
+                
+                if let id = session[JSONKeys.id] as? String {
+                    print("logout id: \(id)")
+                    completionHandlerForDeleteSession(success: true, error: nil)
+                }
+            }
+        }
+        
+    }
+    
 }
 
 
