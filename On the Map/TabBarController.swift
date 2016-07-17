@@ -24,40 +24,21 @@ class TabBarController: UITabBarController {
     }
     
     @IBAction func logoutButton(sender: AnyObject) {
-        let request = NSMutableURLRequest(URL: NSURL(string: "https://www.udacity.com/api/session")!)
-        request.HTTPMethod = "DELETE"
-        var xsrfCookie: NSHTTPCookie? = nil
-        let sharedCookieStorage = NSHTTPCookieStorage.sharedHTTPCookieStorage()
-        for cookie in sharedCookieStorage.cookies! {
-            if cookie.name == "XSRF-TOKEN" { xsrfCookie = cookie }
-        }
-        if let xsrfCookie = xsrfCookie {
-            request.setValue(xsrfCookie.value, forHTTPHeaderField: "X-XSRF-TOKEN")
-        }
-        let session = NSURLSession.sharedSession()
-        let task = session.dataTaskWithRequest(request) { data, response, error in
-            if error != nil {
-                print(error)
-                return
+        
+        UdacityClient.sharedInstance().deleteSession { (success, error) in
+            if success {
+                performUIUpdatesOnMain({ 
+                    let controller = self.storyboard!.instantiateViewControllerWithIdentifier("LoginScreen")
+                    self.presentViewController(controller, animated: true, completion: nil)
+                })
+            } else {
+                self.displayError("Error: \(error)", viewController: self)
             }
-            let newData = data!.subdataWithRange(NSMakeRange(5, data!.length - 5))
-            print(NSString(data: newData, encoding: NSUTF8StringEncoding))
-            
-            NSOperationQueue.mainQueue().addOperationWithBlock({
-                self.logout()
-            })
-            
         }
-        task.resume()
     }
     
     @IBAction func refreshButton(sender: AnyObject) {
         refreshPins()
-    }
-    
-    func logout() {
-        let controller = storyboard!.instantiateViewControllerWithIdentifier("LoginScreen") 
-        presentViewController(controller, animated: true, completion: nil)
     }
     
     func refreshPins() {
