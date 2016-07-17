@@ -71,33 +71,20 @@ class TabBarController: UITabBarController {
         mapViewController.mapView.removeAnnotations(annotations)
         mapViewController.displayPins()
         
-        getStudentPins { (studentData, error) in
+        ParseClient.sharedInstance().getStudentLocations { (results, error) in
             
-            let parsedData: AnyObject!
-            do {
-                parsedData = try NSJSONSerialization.JSONObjectWithData(studentData!, options: .AllowFragments)
-            } catch {
-                print("Could not parse the data as JSON: '\(studentData)")
-                return
+            if let results = results {
+                ParseClient.sharedInstance().studentArray = results
+                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                    
+                    mapViewController.displayPins()
+                    pinTableViewController.tableView.reloadData()
+                    print("Data Reloaded")
+                    
+                })
+            } else {
+                print("Error Reloading")
             }
-            
-            // Use the data
-            guard let results = parsedData["results"] as? [[String: AnyObject]] else {
-                print("Unable to find key 'results' in \(parsedData)")
-                return
-            }
-            
-            ParseClient.sharedInstance().studentArray = StudentInformation.studentsFromResults(results)
-            
-            dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                
-                mapViewController.displayPins()
-                pinTableViewController.tableView.reloadData()
-                print("Data Reloaded")
-                
-            })
-            
         }
     }
-
 }
