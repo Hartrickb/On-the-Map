@@ -24,7 +24,14 @@ class InformationPostingViewController: UIViewController, MKMapViewDelegate, UIT
         self.hideKeyboardWhenTappedAround()
         findOnMapButton.setTitleColor(UIColor.darkGrayColor(), forState: UIControlState.Disabled)
 
-        findOnMapButton.enabled = false
+        buttonEnabled(button: findOnMapButton, bool: false)
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        findOnMapButton.backgroundColor = UIColor.clearColor()
+        findOnMapButton.layer.cornerRadius = 5
+        findOnMapButton.layer.borderWidth = 1.5
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
@@ -67,7 +74,7 @@ class InformationPostingViewController: UIViewController, MKMapViewDelegate, UIT
                 print("\nlat: \(coordinate?.latitude), long: \(coordinate?.longitude)")
                 self.activityIndicator.stopAnimating()
                 self.userLocationText.enabled = true
-                self.findOnMapButton.enabled = true
+                self.buttonEnabled(button: self.findOnMapButton, bool: true)
             }
         }
     }
@@ -88,6 +95,16 @@ class InformationPostingViewController: UIViewController, MKMapViewDelegate, UIT
     }
     
     func textFieldDidBeginEditing(textField: UITextField) {
-        findOnMapButton.enabled = false
+        buttonEnabled(button: findOnMapButton, bool: false)
     }
+    
+    func buttonEnabled(button button: UIButton, bool: Bool) {
+        button.enabled = bool
+        if button.enabled {
+            button.layer.borderColor = UIColor.whiteColor().CGColor
+        } else {
+            button.layer.borderColor = UIColor.darkGrayColor().CGColor
+        }
+    }
+    
 }

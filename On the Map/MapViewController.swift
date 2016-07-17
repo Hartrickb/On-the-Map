@@ -15,6 +15,10 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
+        ParseClient.sharedInstance().annotations.removeAll()
+        ParseClient.sharedInstance().studentArray.removeAll()
+        let annotations = mapView.annotations
+        mapView.removeAnnotations(annotations)
         loadPinsForMap()
     }
     
