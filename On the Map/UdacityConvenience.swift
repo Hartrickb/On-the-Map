@@ -82,6 +82,8 @@ extension UdacityClient {
         
         /* 2. Make the request */
         taskForDELETEMethod { (results, error) in
+            
+            /* 3. Send the desired value(s) to completion handler */
             if let error = error {
                 print("Post error: \(error)")
                 completionHandlerForDeleteSession(success: false, error: error)

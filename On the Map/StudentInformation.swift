@@ -59,14 +59,6 @@ struct StudentInformation {
         return students
     }
     
-//    static func publicStudentDataFromResults(results: [String: AnyObject]) -> StudentInformation {
-//        
-//        var student = StudentInformation()
-//        
-//        for
-//        
-//    }
-    
     static func publicStudentDataFromResults(results: [[String: AnyObject]]) -> StudentInformation {
         
         var student = StudentInformation()
