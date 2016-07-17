@@ -72,7 +72,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="t5X-PA-bf0">
-                                        <rect key="frame" x="164" y="350" width="231" height="30"/>
+                                        <rect key="frame" x="165" y="350" width="231" height="30"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="231" id="W1u-CC-ZVE"/>
                                             <constraint firstAttribute="height" constant="30" id="xz5-KJ-PBt"/>
@@ -88,7 +88,7 @@
                                 </subviews>
                             </stackView>
                             <activityIndicatorView hidden="YES" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="Dyf-ss-pfp">
-                                <rect key="frame" x="282" y="281.5" width="37" height="37"/>
+                                <rect key="frame" x="282" y="282" width="37" height="37"/>
                                 <color key="color" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                             </activityIndicatorView>
                         </subviews>
@@ -138,7 +138,7 @@
                         <viewControllerLayoutGuide type="bottom" id="tSk-57-q6c"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="iyx-rD-M8T">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="551"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="6Ar-TF-Mho">
@@ -170,7 +170,7 @@
             <objects>
                 <tableViewController id="grY-vR-FRB" customClass="PinTableViewController" customModule="On_the_Map" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="Iub-mi-NuV">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="551"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
@@ -262,9 +262,9 @@
                                 <rect key="frame" x="290" y="290" width="20" height="20"/>
                             </activityIndicatorView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xau-gV-yQF">
-                                <rect key="frame" x="220" y="503" width="160" height="45"/>
+                                <rect key="frame" x="205" y="503" width="190" height="45"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="27"/>
-                                <state key="normal" title="Find on Map">
+                                <state key="normal" title="  Find on Map  ">
                                     <color key="titleColor" red="0.058823529411764705" green="0.24705882352941178" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
                                 <connections>
@@ -323,7 +323,8 @@
                             </barButtonItem>
                         </rightBarButtonItems>
                     </navigationItem>
-                    <tabBar key="tabBar" contentMode="scaleToFill" id="0Hf-qE-lWj">
+                    <simulatedTabBarMetrics key="simulatedBottomBarMetrics" translucent="NO"/>
+                    <tabBar key="tabBar" contentMode="scaleToFill" translucent="NO" id="0Hf-qE-lWj">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -365,9 +366,9 @@
                                 <rect key="frame" x="0.0" y="212" width="600" height="283"/>
                             </mapView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Inw-zD-44l">
-                                <rect key="frame" x="254" y="503" width="91" height="45"/>
+                                <rect key="frame" x="239" y="503" width="121" height="45"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="27"/>
-                                <state key="normal" title="Submit">
+                                <state key="normal" title="  Submit  ">
                                     <color key="titleColor" red="0.058823529411764705" green="0.24705882352941178" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
                                 <connections>

@@ -10,54 +10,37 @@ import UIKit
 
 class TabBarController: UITabBarController {
     
-    let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
     
     @IBAction func logoutButton(sender: AnyObject) {
-        let request = NSMutableURLRequest(URL: NSURL(string: "https://www.udacity.com/api/session")!)
-        request.HTTPMethod = "DELETE"
-        var xsrfCookie: NSHTTPCookie? = nil
-        let sharedCookieStorage = NSHTTPCookieStorage.sharedHTTPCookieStorage()
-        for cookie in sharedCookieStorage.cookies! {
-            if cookie.name == "XSRF-TOKEN" { xsrfCookie = cookie }
-        }
-        if let xsrfCookie = xsrfCookie {
-            request.setValue(xsrfCookie.value, forHTTPHeaderField: "X-XSRF-TOKEN")
-        }
-        let session = NSURLSession.sharedSession()
-        let task = session.dataTaskWithRequest(request) { data, response, error in
-            if error != nil {
-                print(error)
-                return
+        
+        let activityView = UIActivityIndicatorView(activityIndicatorStyle: .WhiteLarge)
+        activityView.color = UIColor.blackColor()
+        activityView.hidesWhenStopped = true
+        activityView.center = self.view.center
+        performUIUpdatesOnMain({
+            activityView.startAnimating()
+            self.view.addSubview(activityView)
+        })
+        
+        UdacityClient.sharedInstance().deleteSession { (success, error) in
+            
+            if success {
+                performUIUpdatesOnMain({ 
+                    let controller = self.storyboard!.instantiateViewControllerWithIdentifier("LoginScreen")
+                    self.presentViewController(controller, animated: true, completion: nil)
+                })
+            } else {
+                performUIUpdatesOnMain({ 
+                    activityView.stopAnimating()
+                    self.displayError("Error: \(error)", viewController: self)
+                })
             }
-            let newData = data!.subdataWithRange(NSMakeRange(5, data!.length - 5))
-            print(NSString(data: newData, encoding: NSUTF8StringEncoding))
-            
-            NSOperationQueue.mainQueue().addOperationWithBlock({
-                self.logout()
-            })
-            
         }
-        task.resume()
     }
     
     @IBAction func refreshButton(sender: AnyObject) {
         refreshPins()
-    }
-    
-    func logout() {
-        let controller = storyboard!.instantiateViewControllerWithIdentifier("LoginScreen") 
-        presentViewController(controller, animated: true, completion: nil)
     }
     
     func refreshPins() {
@@ -65,47 +48,26 @@ class TabBarController: UITabBarController {
         let pinTableViewController = self.viewControllers![1] as! PinTableViewController
         
         
-        self.appDelegate.annotations.removeAll()
-        self.appDelegate.studentArray.removeAll()
+        ParseClient.sharedInstance().annotations.removeAll()
+        ParseClient.sharedInstance().studentArray.removeAll()
         let annotations = mapViewController.mapView.annotations
         mapViewController.mapView.removeAnnotations(annotations)
         mapViewController.displayPins()
         
-//        if mapViewController.mapView.annotations.isEmpty == false {
-//            let annotations = mapViewController.mapView.annotations
-//            mapViewController.mapView.removeAnnotations(annotations)
-//        }
-        
-//        mapViewController.mapView.removeAnnotations(appDelegate.annotations)
-        
-        
-        getStudentPins { (studentData, error) in
+        ParseClient.sharedInstance().getStudentLocations { (results, error) in
             
-            let parsedData: AnyObject!
-            do {
-                parsedData = try NSJSONSerialization.JSONObjectWithData(studentData!, options: .AllowFragments)
-            } catch {
-                print("Could not parse the data as JSON: '\(studentData)")
-                return
+            if let results = results {
+                ParseClient.sharedInstance().studentArray = results
+                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                    
+                    mapViewController.displayPins()
+                    pinTableViewController.tableView.reloadData()
+                    print("Data Reloaded")
+                    
+                })
+            } else {
+                print("Error Reloading")
             }
-            
-            // Use the data
-            guard let results = parsedData["results"] as? [[String: AnyObject]] else {
-                print("Unable to find key 'results' in \(parsedData)")
-                return
-            }
-            
-            self.appDelegate.studentArray = StudentInformation.studentsFromResults(results)
-            
-            dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                
-                mapViewController.displayPins()
-                pinTableViewController.tableView.reloadData()
-                print("Data Reloaded")
-                
-            })
-            
         }
     }
-
 }
