@@ -46,6 +46,34 @@ extension UdacityClient {
             }
         }
     }
+    
+    func getPublicUserData(completionHandlerForStudent: (student: StudentInformation?, error: NSError?) -> Void) {
+        
+        /* 1. Specify parameters, method (if has {key}), and HTTP body (if POST) */
+        if let studentID = UdacityClient.sharedInstance().userID {
+            
+            /* 2. Make the request */
+            taskForGETInfo(studentID) { (results, error) in
+                
+                /* 3. Send the desired value(s) to the completion handler */
+                if error != nil {
+                    completionHandlerForStudent(student: nil, error: error)
+                    return
+                } else {
+                    // Use the data
+                    
+                    guard let studentResults = results[JSONKeys.user] as? [String: AnyObject] else {
+                        completionHandlerForStudent(student: nil, error: NSError(domain: "getPublicUserData key", code: 0, userInfo: [NSLocalizedDescriptionKey: "Unable to find key '\(JSONKeys.user)'"]))
+
+                        return
+                    }
+                    
+                    let student = StudentInformation(studentDictionary: studentResults)
+                    completionHandlerForStudent(student: student, error: nil)
+                }
+            }
+        }
+    }
 }
 
 

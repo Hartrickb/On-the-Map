@@ -29,9 +29,17 @@ class LoginViewController: UIViewController {
         
         UdacityClient.sharedInstance().postSession(emailTextField.text, password: passwordTextField.text) { (studentID, error) in
             if let studentID = studentID {
+                
                 UdacityClient.sharedInstance().userID = studentID
-                self.completeLogin()
                 print("Successfully got studentID: \(UdacityClient.sharedInstance().userID)")
+                
+                UdacityClient.sharedInstance().getPublicUserData({ (student, error) in
+                    if let student = student {
+                        UdacityClient.sharedInstance().student = student
+                        print("StudentInfo: \(UdacityClient.sharedInstance().student)")
+                        self.completeLogin()
+                    }
+                })
             } else {
                 var newErrorString = "\(error)"
                 
@@ -53,34 +61,6 @@ class LoginViewController: UIViewController {
                 }
             }
         }
-        
-//        postUserSession { (studentData, error) in
-//            if error == nil {
-//                self.getPublicUserData({ (studentData, error) in
-//                    
-//                    let parsedData: AnyObject!
-//                    do {
-//                        parsedData = try NSJSONSerialization.JSONObjectWithData(studentData!, options: .AllowFragments)
-//                    } catch {
-//                        print("Could not parse the data as JSON: '\(studentData)")
-//                        return
-//                    }
-//                    
-//                    // Use the data
-//                    guard let results = parsedData["user"] as? [String: AnyObject] else {
-//                        print("Unable to find key 'user' in \(parsedData)")
-//                        self.uiWhileLoggingInEnabled(false)
-//                        return
-//                    }
-//                    
-//                    let student = StudentInformation(studentDictionary: results)
-//                    UdacityClient.sharedInstance().student = student
-//                    print("student: \(UdacityClient.sharedInstance().student)")
-//                    
-//                })
-//            }
-//            
-//        }
     }
     
     @IBAction func signUpButton(sender: AnyObject) {
@@ -94,35 +74,6 @@ class LoginViewController: UIViewController {
         presentViewController(controller, animated: true, completion: nil)
     }
     
-//    func getPublicUserData(completionHandler: (studentData: NSData?, error: NSError?) -> Void) {
-////        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-//        
-//        if let userId = self.appDelegate.userID {
-//            print("userId: \(userId)")
-//            let request = NSMutableURLRequest(URL: NSURL(string: "https://www.udacity.com/api/users/\(userId)")!)
-//            let session = NSURLSession.sharedSession()
-//            let task = session.dataTaskWithRequest(request) { (data, response, error) in
-//                if error != nil {
-//                    print("error: \(error)")
-//                    return
-//                }
-//                
-//                guard let statusCode = (response as? NSHTTPURLResponse)?.statusCode where statusCode >= 200 && statusCode <= 299 else {
-//                    print("Your request returned a status code of something other than successful 2xx: \(response)")
-//                    return
-//                }
-//                
-//                guard let data = data else {
-//                    print("There was no data")
-//                    return
-//                }
-//                
-//                let newData = data.subdataWithRange(NSMakeRange(5, data.length - 5))
-//                completionHandler(studentData: newData, error: nil)
-//            }
-//            task.resume()
-//        }
-//    }
     
     func uiWhileLoggingInEnabled(enabled: Bool) {
         emailTextField.enabled = !enabled
