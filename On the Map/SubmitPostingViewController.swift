@@ -37,13 +37,17 @@ class SubmitPostingViewController: UIViewController, MKMapViewDelegate, UITextFi
     
     @IBAction func submitUserLocationWithURL(sender: AnyObject) {
         
-        let student = UdacityClient.sharedInstance().student
+        let student = StorageModel.sharedInstance().student
         
         ParseClient.sharedInstance().postStudentLocationForStudent(student) { (success, error) in
             if success {
                 self.performSegueWithIdentifier("submit", sender: sender)
             } else {
-                self.displayError("\(error)", viewController: self)
+                var newError = "\(error)"
+                if newError.containsString("The Internet connection appears to be offline.") {
+                    newError = "No internet connection. Please try again"
+                }
+                self.displayError(newError, viewController: self)
             }
         }
     }
@@ -90,7 +94,7 @@ class SubmitPostingViewController: UIViewController, MKMapViewDelegate, UITextFi
         }
         
         if let userURL = makeValidURLString(url) {
-            UdacityClient.sharedInstance().student.mediaURL = userURL
+            StorageModel.sharedInstance().student.mediaURL = userURL
             buttonEnabled(button: submitButton, bool: true)
             print(userURL)
         } else {

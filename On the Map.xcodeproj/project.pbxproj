@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		91214D7F1D3E6A8B004DBE39 /* StorageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91214D7E1D3E6A8B004DBE39 /* StorageModel.swift */; };
 		913FC44F1D26B2A10013CF6E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 913FC44E1D26B2A10013CF6E /* AppDelegate.swift */; };
 		913FC4541D26B2A10013CF6E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 913FC4521D26B2A10013CF6E /* Main.storyboard */; };
 		913FC4571D26B2A10013CF6E /* On_the_Map.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 913FC4551D26B2A10013CF6E /* On_the_Map.xcdatamodeld */; };
@@ -51,6 +52,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		91214D7E1D3E6A8B004DBE39 /* StorageModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StorageModel.swift; sourceTree = "<group>"; };
 		913FC44B1D26B2A10013CF6E /* On the Map.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "On the Map.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		913FC44E1D26B2A10013CF6E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		913FC4531D26B2A10013CF6E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -183,6 +185,7 @@
 			isa = PBXGroup;
 			children = (
 				91D8EB841D3544780041998E /* StudentInformation.swift */,
+				91214D7E1D3E6A8B004DBE39 /* StorageModel.swift */,
 				91D8EB8C1D3816170041998E /* Clients */,
 			);
 			name = Model;
@@ -361,6 +364,7 @@
 				91D8EB7B1D3005E90041998E /* InformationPostingViewController.swift in Sources */,
 				913FC4571D26B2A10013CF6E /* On_the_Map.xcdatamodeld in Sources */,
 				91D8EB961D39847D0041998E /* UdacityClient.swift in Sources */,
+				91214D7F1D3E6A8B004DBE39 /* StorageModel.swift in Sources */,
 				913FC44F1D26B2A10013CF6E /* AppDelegate.swift in Sources */,
 				91D8EB901D3942480041998E /* ParseConstants.swift in Sources */,
 				91D8EB921D395CC00041998E /* ParseConvenience.swift in Sources */,

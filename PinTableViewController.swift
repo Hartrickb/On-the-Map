@@ -23,24 +23,30 @@ class PinTableViewController: UITableViewController {
         
         ParseClient.sharedInstance().getStudentLocations { (results, error) in
             if let results = results {
-                ParseClient.sharedInstance().studentArray = results
+                StorageModel.sharedInstance().studentArray = results
                 performUIUpdatesOnMain({ 
                     self.tableView.reloadData()
                 })
             } else {
-                self.displayError("\(error)", viewController: self)
+                StorageModel.sharedInstance().studentArray.removeAll()
+                self.tableView.reloadData()
+                var newError = "\(error)"
+                if newError.containsString("The Internet connection appears to be offline.") {
+                    newError = "No internet connection. Please try again"
+                }
+                self.displayError(newError, viewController: self)
             }
         }
     }
     
     // Table View Data Source
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return ParseClient.sharedInstance().studentArray.count
+        return StorageModel.sharedInstance().studentArray.count
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("pinCell", forIndexPath: indexPath) as UITableViewCell
-        let pin = ParseClient.sharedInstance().studentArray[indexPath.item]
+        let pin = StorageModel.sharedInstance().studentArray[indexPath.item]
         
         // Configure the cell
         let first = pin.firstName
@@ -55,7 +61,7 @@ class PinTableViewController: UITableViewController {
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
-        let pin = ParseClient.sharedInstance().studentArray[indexPath.row]
+        let pin = StorageModel.sharedInstance().studentArray[indexPath.row]
         
         let app = UIApplication.sharedApplication()
         if let toOpen = pin.mediaURL {

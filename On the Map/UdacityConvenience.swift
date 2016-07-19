@@ -50,7 +50,7 @@ extension UdacityClient {
     func getPublicUserData(completionHandlerForStudent: (student: StudentInformation?, error: NSError?) -> Void) {
         
         /* 1. Specify parameters, method (if has {key}), and HTTP body (if POST) */
-        if let studentID = UdacityClient.sharedInstance().userID {
+        if let studentID = StorageModel.sharedInstance().userID {
             
             /* 2. Make the request */
             taskForGETInfo(studentID) { (results, error) in

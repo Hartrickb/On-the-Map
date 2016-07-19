@@ -16,7 +16,7 @@ extension ParseClient {
     func getStudentLocations(completionHandlerForStudents: (result: [StudentInformation]?, error: NSError?) -> Void) {
         
         /* 1. Specify parameters, method (if has {key}), and HTTP body (if POST) */
-        let parameters = [ParseClient.StudentLocationParameterKey.limit: ParseClient.StudentLocationParameterValues.limit]
+        let parameters = [ParseClient.StudentLocationParameterKey.limit: ParseClient.StudentLocationParameterValues.limit, ParseClient.StudentLocationParameterKey.order: ParseClient.StudentLocationParameterValues.order]
         let method = Methods.StudentsLocations
         
         /* 2. Make the request */

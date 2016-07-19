@@ -68,8 +68,8 @@ class InformationPostingViewController: UIViewController, MKMapViewDelegate, UIT
                 let location = placemark?.location
                 let coordinate = location?.coordinate
                 self.userLocation.coordinate = coordinate!
-                UdacityClient.sharedInstance().student.lat = coordinate?.latitude
-                UdacityClient.sharedInstance().student.long = coordinate?.longitude
+                StorageModel.sharedInstance().student.lat = coordinate?.latitude
+                StorageModel.sharedInstance().student.long = coordinate?.longitude
                 print("self.userLocation.coordinate: \(self.userLocation.coordinate)")
                 print("\nlat: \(coordinate?.latitude), long: \(coordinate?.longitude)")
                 self.activityIndicator.stopAnimating()
@@ -84,7 +84,7 @@ class InformationPostingViewController: UIViewController, MKMapViewDelegate, UIT
             displayError("No text entered", viewController: self)
             print("No text entered")
         } else {
-            UdacityClient.sharedInstance().student.mapString = textField.text!
+            StorageModel.sharedInstance().student.mapString = textField.text!
             forwardGeocoding(textField.text!)
         }
     }
