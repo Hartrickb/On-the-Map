@@ -25,15 +25,22 @@ class TabBarController: UITabBarController {
         
         UdacityClient.sharedInstance().deleteSession { (success, error) in
             
+            var newError = "\(error)"
+            if newError.containsString("The Internet connection appears to be offline.") {
+                newError = "No internet connection. Please try again"
+            }
+            
             if success {
                 performUIUpdatesOnMain({ 
                     let controller = self.storyboard!.instantiateViewControllerWithIdentifier("LoginScreen")
                     self.presentViewController(controller, animated: true, completion: nil)
                 })
             } else {
-                performUIUpdatesOnMain({ 
+                performUIUpdatesOnMain({
                     activityView.stopAnimating()
-                    self.displayError("Error: \(error)", viewController: self)
+                    let controller = self.storyboard!.instantiateViewControllerWithIdentifier("LoginScreen")
+                    self.presentViewController(controller, animated: true, completion: nil)
+                    self.displayError(newError, viewController: self)
                 })
             }
         }
@@ -48,8 +55,8 @@ class TabBarController: UITabBarController {
         let pinTableViewController = self.viewControllers![1] as! PinTableViewController
         
         
-        ParseClient.sharedInstance().annotations.removeAll()
-        ParseClient.sharedInstance().studentArray.removeAll()
+        StorageModel.sharedInstance().annotations.removeAll()
+        StorageModel.sharedInstance().studentArray.removeAll()
         let annotations = mapViewController.mapView.annotations
         mapViewController.mapView.removeAnnotations(annotations)
         mapViewController.displayPins()
@@ -57,7 +64,7 @@ class TabBarController: UITabBarController {
         ParseClient.sharedInstance().getStudentLocations { (results, error) in
             
             if let results = results {
-                ParseClient.sharedInstance().studentArray = results
+                StorageModel.sharedInstance().studentArray = results
                 dispatch_async(dispatch_get_main_queue(), { () -> Void in
                     
                     mapViewController.displayPins()
@@ -66,6 +73,10 @@ class TabBarController: UITabBarController {
                     
                 })
             } else {
+                performUIUpdatesOnMain({ 
+                    pinTableViewController.tableView.reloadData()
+                })
+                self.displayError("There was an error reloading", viewController: self)
                 print("Error Reloading")
             }
         }

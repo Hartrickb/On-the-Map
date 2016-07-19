@@ -30,18 +30,22 @@ class LoginViewController: UIViewController {
         UdacityClient.sharedInstance().postSession(emailTextField.text, password: passwordTextField.text) { (studentID, error) in
             if let studentID = studentID {
                 
-                UdacityClient.sharedInstance().userID = studentID
-                print("Successfully got studentID: \(UdacityClient.sharedInstance().userID)")
+                StorageModel.sharedInstance().userID = studentID
+                print("Successfully got studentID: \(StorageModel.sharedInstance().userID)")
                 
                 UdacityClient.sharedInstance().getPublicUserData({ (student, error) in
                     if let student = student {
-                        UdacityClient.sharedInstance().student = student
-                        print("StudentInfo: \(UdacityClient.sharedInstance().student)")
+                        StorageModel.sharedInstance().student = student
+                        print("StudentInfo: \(StorageModel.sharedInstance().student)")
                         self.completeLogin()
                     }
                 })
             } else {
                 var newErrorString = "\(error)"
+                
+                if newErrorString.containsString("The Internet connection appears to be offline.") {
+                    newErrorString = "No internet connection. Please try again"
+                }
                 
                 if newErrorString.containsString("trails.Error 400: Missing parameter 'username'") {
                     newErrorString = "Missing Username"

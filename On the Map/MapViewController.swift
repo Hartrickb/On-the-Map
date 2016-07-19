@@ -15,8 +15,8 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        ParseClient.sharedInstance().annotations.removeAll()
-        ParseClient.sharedInstance().studentArray.removeAll()
+        StorageModel.sharedInstance().annotations.removeAll()
+        StorageModel.sharedInstance().studentArray.removeAll()
         let annotations = mapView.annotations
         mapView.removeAnnotations(annotations)
         loadPinsForMap()
@@ -26,12 +26,16 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     func loadPinsForMap() {
         ParseClient.sharedInstance().getStudentLocations { (results, error) in
             if let results = results {
-                ParseClient.sharedInstance().studentArray = results
+                StorageModel.sharedInstance().studentArray = results
                 performUIUpdatesOnMain({
                     self.displayPins()
                 })
             } else {
-                self.displayError("\(error)", viewController: self)
+                var newError = "\(error)"
+                if newError.containsString("The Internet connection appears to be offline.") {
+                    newError = "No internet connection. Please try again"
+                }
+                self.displayError(newError, viewController: self)
             }
         }
     }
@@ -44,7 +48,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         // point annotations will be stored in this array, and then provided to the map view.
         
         // Converts the array to annotations that the mapView can use
-        for student in ParseClient.sharedInstance().studentArray {
+        for student in StorageModel.sharedInstance().studentArray {
             let lat = CLLocationDegrees(student.lat!)
             let long = CLLocationDegrees(student.long!)
             
@@ -59,11 +63,11 @@ class MapViewController: UIViewController, MKMapViewDelegate {
             annotation.title = "\(first) \(last)"
             annotation.subtitle = mediaURL
             
-            ParseClient.sharedInstance().annotations.append(annotation)
+            StorageModel.sharedInstance().annotations.append(annotation)
         }
         
         // When the array is complete, we add the annotations to the map.
-        self.mapView.addAnnotations(ParseClient.sharedInstance().annotations)
+        self.mapView.addAnnotations(StorageModel.sharedInstance().annotations)
     }
     
     // Creates a pin / annotation for the map view

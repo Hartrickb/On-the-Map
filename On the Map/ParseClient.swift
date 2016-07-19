@@ -14,10 +14,6 @@ class ParseClient: NSObject {
     // Shared Session
     var session = NSURLSession.sharedSession()
     
-    // Place to store recieved data
-    var annotations = [MKPointAnnotation]()
-    var studentArray = [StudentInformation]()
-    
     override init() {
         super.init()
     }
@@ -31,7 +27,7 @@ class ParseClient: NSObject {
         let request = NSMutableURLRequest(URL: parseURLFromParameters(newParameters, withPathExtension: method))
         request.addValue(ParseClient.Constants.ApplicationId, forHTTPHeaderField: ParseClient.HTTPHeaderField.AppIdHeader)
         request.addValue(ParseClient.Constants.RESTAPIKey, forHTTPHeaderField: ParseClient.HTTPHeaderField.RESTAPIHeader)
-        
+        print("request: \(request)")
         /* 4. Make the request */
         let task = session.dataTaskWithRequest(request) { (data, response, error) in
             
