@@ -27,6 +27,7 @@ extension ParseClient {
                 completionHandlerForStudents(result: nil, error: error)
             } else {
                 if let results = results[ParseClient.JSONResponseKeys.Results] as? [[String: AnyObject]] {
+                    print("results: \(results)")
                     let students = StudentInformation.studentsFromResults(results)
                     completionHandlerForStudents(result: students, error: nil)
                 } else {

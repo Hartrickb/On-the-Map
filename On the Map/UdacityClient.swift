@@ -97,7 +97,7 @@ class UdacityClient: NSObject {
             
             /* GUARD: Was there any data returned? */
             guard let data = data else {
-                sendError("No data was returned by the request!")
+                sendError("No d data was returned by the request!")
                 return
             }
             
@@ -186,12 +186,7 @@ class UdacityClient: NSObject {
         completionHandlerForConvertData(result: parsedResult, error: nil)
     }
     
-    class func sharedInstance() -> UdacityClient {
-        struct Singleton {
-            static var sharedInstance = UdacityClient()
-        }
-        return Singleton.sharedInstance
-    }
+    
     
     private func udacityURLWithStudentID(studentID: String) -> NSURL {
         
@@ -201,6 +196,15 @@ class UdacityClient: NSObject {
         components.path = Constants.ApiPath + "/" + (studentID)
         
         return components.URL!
+    }
+    
+    // MARK: Shared Instance
+    
+    class func sharedInstance() -> UdacityClient {
+        struct Singleton {
+            static var sharedInstance = UdacityClient()
+        }
+        return Singleton.sharedInstance
     }
     
 }
