@@ -54,13 +54,21 @@ class MapViewController: UIViewController, MKMapViewDelegate {
             
             let coordinate = CLLocationCoordinate2D(latitude: lat, longitude: long)
             
-            let first = student.firstName
-            let last = student.lastName
+            var first = student.firstName
+            var last = student.lastName
             let mediaURL = student.mediaURL
+            
+            if first == nil {
+                first = " "
+            }
+            
+            if last == nil {
+                last = " "
+            }
             
             let annotation = MKPointAnnotation()
             annotation.coordinate = coordinate
-            annotation.title = "\(first) \(last)"
+            annotation.title = "\(first!) \(last!)"
             annotation.subtitle = mediaURL
             
             StorageModel.sharedInstance().annotations.append(annotation)

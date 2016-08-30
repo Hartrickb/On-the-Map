@@ -35,7 +35,7 @@ extension ParseClient {
     }
     
     struct StudentLocationParameterValues {
-        static let limit = "10"
+        static let limit = "100"
         static let skip: String? = nil
         static let order = "-updatedAt"
     }

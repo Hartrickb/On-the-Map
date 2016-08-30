@@ -10,8 +10,8 @@ import Foundation
 
 struct StudentInformation {
     let id: String
-    let firstName: String
-    let lastName: String
+    let firstName: String?
+    let lastName: String?
     var mapString: String?
     var mediaURL: String?
     var lat: Double?
@@ -19,8 +19,8 @@ struct StudentInformation {
     
     init(dictionary: [String: AnyObject]) {
         id = dictionary["uniqueKey"] as! String
-        firstName = dictionary["firstName"] as! String
-        lastName = dictionary["lastName"] as! String
+        firstName = dictionary["firstName"] as? String
+        lastName = dictionary["lastName"] as? String
         mapString = dictionary["mapString"] as? String
         mediaURL = dictionary["mediaURL"] as? String
         lat = dictionary["latitude"] as? Double
@@ -29,8 +29,8 @@ struct StudentInformation {
     
     init(studentDictionary: [String: AnyObject]) {
         id = studentDictionary["key"] as! String
-        firstName = studentDictionary["first_name"] as! String
-        lastName = studentDictionary["last_name"] as! String
+        firstName = studentDictionary["first_name"] as? String
+        lastName = studentDictionary["last_name"] as? String
         mapString = nil
         mediaURL = nil
         lat = nil

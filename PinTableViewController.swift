@@ -49,11 +49,19 @@ class PinTableViewController: UITableViewController {
         let pin = StorageModel.sharedInstance().studentArray[indexPath.item]
         
         // Configure the cell
-        let first = pin.firstName
-        let last = pin.lastName
+        var first = pin.firstName
+        var last = pin.lastName
         let mediaURL = pin.mediaURL
         
-        cell.textLabel?.text = "\(first) \(last)"
+        if first == nil {
+            first = ""
+        }
+        
+        if last == nil {
+            last = ""
+        }
+        
+        cell.textLabel?.text = "\(first!) \(last!)"
         cell.detailTextLabel?.text = "\(mediaURL!)"
         
         return cell
@@ -69,6 +77,8 @@ class PinTableViewController: UITableViewController {
                 app.openURL(NSURL(string: url)!)
             }
         }
+        
+        tableView.deselectRowAtIndexPath(indexPath, animated: true)
     }
 }
 

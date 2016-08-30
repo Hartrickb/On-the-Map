@@ -62,7 +62,7 @@ extension ParseClient {
         
         let method = Methods.StudentsLocations
         
-        let jsonBody = "{\"uniqueKey\": \"\(student.id)\", \"firstName\": \"\(student.firstName)\", \"lastName\": \"\(student.lastName)\",\"mapString\": \"\(student.mapString!)\", \"mediaURL\": \"\(student.mediaURL!)\",\"latitude\": \(student.lat!), \"longitude\": \(student.long!)}"
+        let jsonBody = "{\"uniqueKey\": \"\(student.id)\", \"firstName\": \"\(student.firstName!)\", \"lastName\": \"\(student.lastName!)\",\"mapString\": \"\(student.mapString!)\", \"mediaURL\": \"\(student.mediaURL!)\",\"latitude\": \(student.lat!), \"longitude\": \(student.long!)}"
         
         /* 2. Make the request */
         taskForPOSTMethod(method, parameters: nil, jsonBody: jsonBody) { (results, error) in

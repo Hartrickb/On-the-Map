@@ -43,7 +43,7 @@ class SubmitPostingViewController: UIViewController, MKMapViewDelegate, UITextFi
             if success {
                 self.performSegueWithIdentifier("submit", sender: sender)
             } else {
-                var newError = "\(error)"
+                var newError = "\(error!.localizedDescription)"
                 if newError.containsString("The Internet connection appears to be offline.") {
                     newError = "No internet connection. Please try again"
                 }
