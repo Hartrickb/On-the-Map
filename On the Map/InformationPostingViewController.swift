@@ -53,7 +53,11 @@ class InformationPostingViewController: UIViewController, MKMapViewDelegate, UIT
     
     func forwardGeocoding(address: String) {
         userLocationText.enabled = false
-        activityIndicator.startAnimating()
+        
+        performUIUpdatesOnMain { 
+            self.activityIndicator.startAnimating()
+        }
+        
         CLGeocoder().geocodeAddressString(address) { (placemarks, error) in
             if error != nil {
                 self.displayError("Could not find location. Try again", viewController: self)

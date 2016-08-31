@@ -21,9 +21,11 @@ class SubmitPostingViewController: UIViewController, MKMapViewDelegate, UITextFi
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         self.hideKeyboardWhenTappedAround()
         userLocationMap.addAnnotation(userLocation)
         userLocationMap.showAnnotations(userLocationMap.annotations, animated: true)
+        userLocationMap.camera.altitude *= 10
         submitButton.setTitleColor(UIColor.darkGrayColor(), forState: UIControlState.Disabled)
         buttonEnabled(button: submitButton, bool: false)
     }
