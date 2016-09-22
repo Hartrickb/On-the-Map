@@ -289,15 +289,18 @@
 					913FC44A1D26B2A10013CF6E = {
 						CreatedOnToolsVersion = 7.3.1;
 						DevelopmentTeam = L6BTPYG3M7;
+						LastSwiftMigration = 0800;
 					};
 					913FC4611D26B2A10013CF6E = {
 						CreatedOnToolsVersion = 7.3.1;
 						DevelopmentTeam = L6BTPYG3M7;
+						LastSwiftMigration = 0800;
 						TestTargetID = 913FC44A1D26B2A10013CF6E;
 					};
 					913FC46C1D26B2A10013CF6E = {
 						CreatedOnToolsVersion = 7.3.1;
 						DevelopmentTeam = L6BTPYG3M7;
+						LastSwiftMigration = 0800;
 						TestTargetID = 913FC44A1D26B2A10013CF6E;
 					};
 				};
@@ -518,6 +521,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.Bennett.On-the-Map";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 2.3;
 			};
 			name = Debug;
 		};
@@ -529,6 +533,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.Bennett.On-the-Map";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 2.3;
 			};
 			name = Release;
 		};
@@ -540,6 +545,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.Bennett.On-the-MapTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 2.3;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/On the Map.app/On the Map";
 			};
 			name = Debug;
@@ -552,6 +558,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.Bennett.On-the-MapTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 2.3;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/On the Map.app/On the Map";
 			};
 			name = Release;
@@ -563,6 +570,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.Bennett.On-the-MapUITests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 2.3;
 				TEST_TARGET_NAME = "On the Map";
 			};
 			name = Debug;
@@ -574,6 +582,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.Bennett.On-the-MapUITests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 2.3;
 				TEST_TARGET_NAME = "On the Map";
 			};
 			name = Release;
