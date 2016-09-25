@@ -10,6 +10,26 @@ import UIKit
 import CoreLocation
 import AddressBookUI
 import MapKit
+fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l < r
+  case (nil, _?):
+    return true
+  default:
+    return false
+  }
+}
+
+fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l > r
+  default:
+    return rhs < lhs
+  }
+}
+
 
 class InformationPostingViewController: UIViewController, MKMapViewDelegate, UITextFieldDelegate {
 
@@ -22,37 +42,37 @@ class InformationPostingViewController: UIViewController, MKMapViewDelegate, UIT
     override func viewDidLoad() {
         super.viewDidLoad()
         self.hideKeyboardWhenTappedAround()
-        findOnMapButton.setTitleColor(UIColor.darkGrayColor(), forState: UIControlState.Disabled)
+        findOnMapButton.setTitleColor(UIColor.darkGray, for: UIControlState.disabled)
 
         buttonEnabled(button: findOnMapButton, bool: false)
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        findOnMapButton.backgroundColor = UIColor.clearColor()
+        findOnMapButton.backgroundColor = UIColor.clear
         findOnMapButton.layer.cornerRadius = 5
         findOnMapButton.layer.borderWidth = 1.5
     }
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "userPinFromLocation" {
-            let controller = segue.destinationViewController as! SubmitPostingViewController
+            let controller = segue.destination as! SubmitPostingViewController
             controller.userLocation = userLocation
         }
     }
     
-    @IBAction func findOnMapButton(sender: AnyObject) {
+    @IBAction func findOnMapButton(_ sender: AnyObject) {
         
-        self.performSegueWithIdentifier("userPinFromLocation", sender: self)
+        self.performSegue(withIdentifier: "userPinFromLocation", sender: self)
         
     }
     
-    @IBAction func cancelUserPosting(sender: AnyObject) {
-        self.dismissViewControllerAnimated(true, completion: nil)
+    @IBAction func cancelUserPosting(_ sender: AnyObject) {
+        self.dismiss(animated: true, completion: nil)
     }
     
-    func forwardGeocoding(address: String) {
-        userLocationText.enabled = false
+    func forwardGeocoding(_ address: String) {
+        userLocationText.isEnabled = false
         
         performUIUpdatesOnMain { 
             self.activityIndicator.startAnimating()
@@ -63,7 +83,7 @@ class InformationPostingViewController: UIViewController, MKMapViewDelegate, UIT
                 self.displayError("Could not find location. Try again", viewController: self)
                 print("No location entered")
                 self.activityIndicator.stopAnimating()
-                self.userLocationText.enabled = true
+                self.userLocationText.isEnabled = true
                 return
             }
             
@@ -77,13 +97,13 @@ class InformationPostingViewController: UIViewController, MKMapViewDelegate, UIT
                 print("self.userLocation.coordinate: \(self.userLocation.coordinate)")
                 print("\nlat: \(coordinate?.latitude), long: \(coordinate?.longitude)")
                 self.activityIndicator.stopAnimating()
-                self.userLocationText.enabled = true
+                self.userLocationText.isEnabled = true
                 self.buttonEnabled(button: self.findOnMapButton, bool: true)
             }
         }
     }
     
-    func textFieldDidEndEditing(textField: UITextField) {
+    func textFieldDidEndEditing(_ textField: UITextField) {
         if textField.text == "" {
             displayError("No text entered", viewController: self)
             print("No text entered")
@@ -93,21 +113,21 @@ class InformationPostingViewController: UIViewController, MKMapViewDelegate, UIT
         }
     }
     
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
     }
     
-    func textFieldDidBeginEditing(textField: UITextField) {
+    func textFieldDidBeginEditing(_ textField: UITextField) {
         buttonEnabled(button: findOnMapButton, bool: false)
     }
     
-    func buttonEnabled(button button: UIButton, bool: Bool) {
-        button.enabled = bool
-        if button.enabled {
-            button.layer.borderColor = UIColor.whiteColor().CGColor
+    func buttonEnabled(button: UIButton, bool: Bool) {
+        button.isEnabled = bool
+        if button.isEnabled {
+            button.layer.borderColor = UIColor.white.cgColor
         } else {
-            button.layer.borderColor = UIColor.darkGrayColor().CGColor
+            button.layer.borderColor = UIColor.darkGray.cgColor
         }
     }
     

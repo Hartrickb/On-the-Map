@@ -13,8 +13,6 @@
 		913FC4571D26B2A10013CF6E /* On_the_Map.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 913FC4551D26B2A10013CF6E /* On_the_Map.xcdatamodeld */; };
 		913FC4591D26B2A10013CF6E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 913FC4581D26B2A10013CF6E /* Assets.xcassets */; };
 		913FC45C1D26B2A10013CF6E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 913FC45A1D26B2A10013CF6E /* LaunchScreen.storyboard */; };
-		913FC4671D26B2A10013CF6E /* On_the_MapTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 913FC4661D26B2A10013CF6E /* On_the_MapTests.swift */; };
-		913FC4721D26B2A10013CF6E /* On_the_MapUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 913FC4711D26B2A10013CF6E /* On_the_MapUITests.swift */; };
 		9180A8951D2BF7110022898B /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9180A8941D2BF7110022898B /* LoginViewController.swift */; };
 		9180A8971D2BFC630022898B /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9180A8961D2BFC630022898B /* MapViewController.swift */; };
 		9180A89B1D2C2F8D0022898B /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9180A89A1D2C2F8D0022898B /* MapKit.framework */; };
@@ -61,11 +59,7 @@
 		913FC45B1D26B2A10013CF6E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		913FC45D1D26B2A10013CF6E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		913FC4621D26B2A10013CF6E /* On the MapTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "On the MapTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		913FC4661D26B2A10013CF6E /* On_the_MapTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = On_the_MapTests.swift; sourceTree = "<group>"; };
-		913FC4681D26B2A10013CF6E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		913FC46D1D26B2A10013CF6E /* On the MapUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "On the MapUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		913FC4711D26B2A10013CF6E /* On_the_MapUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = On_the_MapUITests.swift; sourceTree = "<group>"; };
-		913FC4731D26B2A10013CF6E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9180A8941D2BF7110022898B /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		9180A8961D2BFC630022898B /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		9180A89A1D2C2F8D0022898B /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
@@ -116,8 +110,6 @@
 			children = (
 				9180A89A1D2C2F8D0022898B /* MapKit.framework */,
 				913FC44D1D26B2A10013CF6E /* On the Map */,
-				913FC4651D26B2A10013CF6E /* On the MapTests */,
-				913FC4701D26B2A10013CF6E /* On the MapUITests */,
 				913FC44C1D26B2A10013CF6E /* Products */,
 			);
 			sourceTree = "<group>";
@@ -148,24 +140,6 @@
 				913FC4551D26B2A10013CF6E /* On_the_Map.xcdatamodeld */,
 			);
 			path = "On the Map";
-			sourceTree = "<group>";
-		};
-		913FC4651D26B2A10013CF6E /* On the MapTests */ = {
-			isa = PBXGroup;
-			children = (
-				913FC4661D26B2A10013CF6E /* On_the_MapTests.swift */,
-				913FC4681D26B2A10013CF6E /* Info.plist */,
-			);
-			path = "On the MapTests";
-			sourceTree = "<group>";
-		};
-		913FC4701D26B2A10013CF6E /* On the MapUITests */ = {
-			isa = PBXGroup;
-			children = (
-				913FC4711D26B2A10013CF6E /* On_the_MapUITests.swift */,
-				913FC4731D26B2A10013CF6E /* Info.plist */,
-			);
-			path = "On the MapUITests";
 			sourceTree = "<group>";
 		};
 		91D8EB881D3815820041998E /* Controller */ = {
@@ -283,7 +257,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0730;
-				LastUpgradeCheck = 0730;
+				LastUpgradeCheck = 0800;
 				ORGANIZATIONNAME = Bennett;
 				TargetAttributes = {
 					913FC44A1D26B2A10013CF6E = {
@@ -383,7 +357,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				913FC4671D26B2A10013CF6E /* On_the_MapTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -391,7 +364,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				913FC4721D26B2A10013CF6E /* On_the_MapUITests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -444,8 +416,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -467,7 +441,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -489,8 +463,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -506,9 +482,10 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -521,7 +498,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.Bennett.On-the-Map";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 2.3;
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -533,7 +510,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.Bennett.On-the-Map";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 2.3;
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};

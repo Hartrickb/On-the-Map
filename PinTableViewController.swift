@@ -17,7 +17,7 @@ class PinTableViewController: UITableViewController {
         tableView.dataSource = self
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationItem.title = "Student Locations"
         
@@ -31,7 +31,7 @@ class PinTableViewController: UITableViewController {
                 StorageModel.sharedInstance().studentArray.removeAll()
                 self.tableView.reloadData()
                 var newError = "\(error)"
-                if newError.containsString("The Internet connection appears to be offline.") {
+                if newError.contains("The Internet connection appears to be offline.") {
                     newError = "No internet connection. Please try again"
                 }
                 self.displayError(newError, viewController: self)
@@ -40,13 +40,13 @@ class PinTableViewController: UITableViewController {
     }
     
     // Table View Data Source
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return StorageModel.sharedInstance().studentArray.count
     }
     
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("pinCell", forIndexPath: indexPath) as UITableViewCell
-        let pin = StorageModel.sharedInstance().studentArray[indexPath.item]
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "pinCell", for: indexPath) as UITableViewCell
+        let pin = StorageModel.sharedInstance().studentArray[(indexPath as NSIndexPath).item]
         
         // Configure the cell
         var first = pin.firstName
@@ -67,18 +67,18 @@ class PinTableViewController: UITableViewController {
         return cell
     }
     
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        let pin = StorageModel.sharedInstance().studentArray[indexPath.row]
+        let pin = StorageModel.sharedInstance().studentArray[(indexPath as NSIndexPath).row]
         
-        let app = UIApplication.sharedApplication()
+        let app = UIApplication.shared
         if let toOpen = pin.mediaURL {
             if let url = makeValidURLString(toOpen) {
-                app.openURL(NSURL(string: url)!)
+                app.openURL(URL(string: url)!)
             }
         }
         
-        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        tableView.deselectRow(at: indexPath, animated: true)
     }
 }
 

@@ -12,10 +12,10 @@ class TabBarController: UITabBarController {
     
     
     
-    @IBAction func logoutButton(sender: AnyObject) {
+    @IBAction func logoutButton(_ sender: AnyObject) {
         
-        let activityView = UIActivityIndicatorView(activityIndicatorStyle: .WhiteLarge)
-        activityView.color = UIColor.blackColor()
+        let activityView = UIActivityIndicatorView(activityIndicatorStyle: .whiteLarge)
+        activityView.color = UIColor.black
         activityView.hidesWhenStopped = true
         activityView.center = self.view.center
         performUIUpdatesOnMain({
@@ -26,27 +26,27 @@ class TabBarController: UITabBarController {
         UdacityClient.sharedInstance().deleteSession { (success, error) in
             
             var newError = "\(error)"
-            if newError.containsString("The Internet connection appears to be offline.") {
+            if newError.contains("The Internet connection appears to be offline.") {
                 newError = "No internet connection. Please try again"
             }
             
             if success {
                 performUIUpdatesOnMain({ 
-                    let controller = self.storyboard!.instantiateViewControllerWithIdentifier("LoginScreen")
-                    self.presentViewController(controller, animated: true, completion: nil)
+                    let controller = self.storyboard!.instantiateViewController(withIdentifier: "LoginScreen")
+                    self.present(controller, animated: true, completion: nil)
                 })
             } else {
                 performUIUpdatesOnMain({
                     activityView.stopAnimating()
-                    let controller = self.storyboard!.instantiateViewControllerWithIdentifier("LoginScreen")
-                    self.presentViewController(controller, animated: true, completion: nil)
+                    let controller = self.storyboard!.instantiateViewController(withIdentifier: "LoginScreen")
+                    self.present(controller, animated: true, completion: nil)
                     self.displayError(newError, viewController: self)
                 })
             }
         }
     }
     
-    @IBAction func refreshButton(sender: AnyObject) {
+    @IBAction func refreshButton(_ sender: AnyObject) {
         refreshPins()
     }
     
@@ -65,7 +65,7 @@ class TabBarController: UITabBarController {
             
             if let results = results {
                 StorageModel.sharedInstance().studentArray = results
-                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                DispatchQueue.main.async(execute: { () -> Void in
                     
                     mapViewController.displayPins()
                     pinTableViewController.tableView.reloadData()

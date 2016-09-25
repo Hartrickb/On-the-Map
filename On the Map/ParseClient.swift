@@ -12,29 +12,29 @@ import MapKit
 class ParseClient: NSObject {
     
     // Shared Session
-    var session = NSURLSession.sharedSession()
+    var session = URLSession.shared
     
     override init() {
         super.init()
     }
     
-    func taskForGetMethod(method: String, parameters: [String: AnyObject], completionHandlerForGET: (result: AnyObject!, error: NSError?) -> Void) -> NSURLSessionDataTask {
+    func taskForGetMethod(_ method: String, parameters: [String: AnyObject], completionHandlerForGET: @escaping (_ result: AnyObject?, _ error: NSError?) -> Void) -> URLSessionDataTask {
         
         /* 1. Set the parameters */
         var newParameters = parameters
         
         /* 2/3. Build the URL, Configure the request */
-        let request = NSMutableURLRequest(URL: parseURLFromParameters(newParameters, withPathExtension: method))
+        let request = NSMutableURLRequest(url: parseURLFromParameters(newParameters, withPathExtension: method))
         request.addValue(ParseClient.Constants.ApplicationId, forHTTPHeaderField: ParseClient.HTTPHeaderField.AppIdHeader)
         request.addValue(ParseClient.Constants.RESTAPIKey, forHTTPHeaderField: ParseClient.HTTPHeaderField.RESTAPIHeader)
         print("request: \(request)")
         /* 4. Make the request */
-        let task = session.dataTaskWithRequest(request) { (data, response, error) in
+        let task = session.dataTask(with: request as URLRequest, completionHandler: { (data, response, error) in
             
-            func sendError(error: String) {
+            func sendError(_ error: String) {
                 print(error)
                 let userInfo = [NSLocalizedDescriptionKey: error]
-                completionHandlerForGET(result: nil, error: NSError(domain: "taskForGETMethod", code: 1, userInfo: userInfo))
+                completionHandlerForGET(nil, NSError(domain: "taskForGETMethod", code: 1, userInfo: userInfo))
             }
             
             /* GUARD: Was there an error? */
@@ -44,7 +44,7 @@ class ParseClient: NSObject {
             }
             
             /* GUARD: Did we get a successfull 2xx response? */
-            guard let statusCode = (response as? NSHTTPURLResponse)?.statusCode where statusCode >= 200 && statusCode <= 299 else {
+            guard let statusCode = (response as? HTTPURLResponse)?.statusCode , statusCode >= 200 && statusCode <= 299 else {
                 sendError("Your request returned a status code other than a successful 2xx")
                 return
             }
@@ -58,7 +58,7 @@ class ParseClient: NSObject {
             /* 5/6. Parse the data and use the data (happens in completion hander) */
             self.convertDataWithCompletionHandler(data, completionHandlerForConvertData: completionHandlerForGET)
             
-        }
+        }) 
         
         /* 7. Start the request */
         task.resume()
@@ -67,26 +67,26 @@ class ParseClient: NSObject {
         
     }
     
-    func taskForPOSTMethod(method: String, parameters: [String: AnyObject]?, jsonBody: String, completionHandlerForPost: (results: AnyObject!, error: NSError?) -> Void) -> NSURLSessionDataTask {
+    func taskForPOSTMethod(_ method: String, parameters: [String: AnyObject]?, jsonBody: String, completionHandlerForPost: @escaping (_ results: AnyObject?, _ error: NSError?) -> Void) -> URLSessionDataTask {
         
         /* 1. Set the parameters */
         var newParameters = parameters
         
         /* 2/3. Build the URL, Configure the request */
-        let request = NSMutableURLRequest(URL: parseURLFromParameters(newParameters, withPathExtension: method))
-        request.HTTPMethod = "POST"
+        let request = NSMutableURLRequest(url: parseURLFromParameters(newParameters, withPathExtension: method))
+        request.httpMethod = "POST"
         request.addValue(Constants.ApplicationId, forHTTPHeaderField: HTTPHeaderField.AppIdHeader)
         request.addValue(Constants.RESTAPIKey, forHTTPHeaderField: HTTPHeaderField.RESTAPIHeader)
         request.addValue(Constants.ContentType, forHTTPHeaderField: HTTPHeaderField.ContentType)
-        request.HTTPBody = jsonBody.dataUsingEncoding(NSUTF8StringEncoding)
+        request.httpBody = jsonBody.data(using: String.Encoding.utf8)
         
         /* 4. Make the request */
-        let task = session.dataTaskWithRequest(request) { (data, response, error) in
+        let task = session.dataTask(with: request as URLRequest, completionHandler: { (data, response, error) in
             
-            func sendError(error: String) {
+            func sendError(_ error: String) {
                 print(error)
                 let userInfo = [NSLocalizedDescriptionKey: error]
-                completionHandlerForPost(results: nil, error: NSError(domain: "taskForPOSTMethod", code: 1, userInfo: userInfo))
+                completionHandlerForPost(nil, NSError(domain: "taskForPOSTMethod", code: 1, userInfo: userInfo))
             }
             
             /* GUARD: Was there an error? */
@@ -96,7 +96,7 @@ class ParseClient: NSObject {
             }
             
             /* GUARD: Did we get a successfull 2xx response? */
-            guard let statusCode = (response as? NSHTTPURLResponse)?.statusCode where statusCode >= 200 && statusCode <= 299 else {
+            guard let statusCode = (response as? HTTPURLResponse)?.statusCode , statusCode >= 200 && statusCode <= 299 else {
                 sendError("Your request returned a status code other than a successful 2xx")
                 return
             }
@@ -109,7 +109,7 @@ class ParseClient: NSObject {
             
             /* 5/6. Parse the data and use the data (happens in completion handler */
             self.convertDataWithCompletionHandler(data, completionHandlerForConvertData: completionHandlerForPost)
-        }
+        }) 
         
         /* 7. Start the request */
         task.resume()
@@ -120,37 +120,37 @@ class ParseClient: NSObject {
     // MARK: Helpers
     
     // Given raw JSON, return a usable Foundation object
-    private func convertDataWithCompletionHandler(data: NSData, completionHandlerForConvertData: (result: AnyObject!, error: NSError?) -> Void) {
+    fileprivate func convertDataWithCompletionHandler(_ data: Data, completionHandlerForConvertData: (_ result: AnyObject?, _ error: NSError?) -> Void) {
         
         var parsedResult: AnyObject!
         do {
-            parsedResult = try NSJSONSerialization.JSONObjectWithData(data, options: .AllowFragments)
+            parsedResult = try JSONSerialization.jsonObject(with: data, options: .allowFragments) as AnyObject
         } catch {
             let userInfo = [NSLocalizedDescriptionKey: "Could not parse the data as JSON: '\(data)'"]
-            completionHandlerForConvertData(result: nil, error: NSError(domain: "convertDataWithCompletionHandler", code: 1, userInfo: userInfo))
+            completionHandlerForConvertData(nil, NSError(domain: "convertDataWithCompletionHandler", code: 1, userInfo: userInfo))
         }
         
-        completionHandlerForConvertData(result: parsedResult, error: nil)
+        completionHandlerForConvertData(parsedResult, nil)
         
     }
     
     // Create a URL from parameters
-    private func parseURLFromParameters(parameters: [String: AnyObject]?, withPathExtension: String? = nil) -> NSURL {
+    fileprivate func parseURLFromParameters(_ parameters: [String: AnyObject]?, withPathExtension: String? = nil) -> URL {
         
-        let components = NSURLComponents()
+        var components = URLComponents()
         components.scheme = ParseClient.Constants.ApiScheme
         components.host = ParseClient.Constants.ApiHost
         components.path = ParseClient.Constants.ApiPath + (withPathExtension ?? "")
-        components.queryItems = [NSURLQueryItem]()
+        components.queryItems = [URLQueryItem]()
         
         if parameters != nil {
             for (key, value) in parameters! {
-                let queryItem = NSURLQueryItem(name: key, value: "\(value)")
+                let queryItem = URLQueryItem(name: key, value: "\(value)")
                 components.queryItems?.append(queryItem)
             }
         }
         
-        return components.URL!
+        return components.url!
         
     }
     

@@ -47,7 +47,7 @@ struct StudentInformation {
         long = nil
     }
     
-    static func studentsFromResults(results: [[String: AnyObject]]) -> [StudentInformation] {
+    static func studentsFromResults(_ results: [[String: AnyObject]]) -> [StudentInformation] {
         
         var students = [StudentInformation]()
         
@@ -59,7 +59,7 @@ struct StudentInformation {
         return students
     }
     
-    static func publicStudentDataFromResults(results: [[String: AnyObject]]) -> StudentInformation {
+    static func publicStudentDataFromResults(_ results: [[String: AnyObject]]) -> StudentInformation {
         
         var student = StudentInformation()
         

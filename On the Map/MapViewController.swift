@@ -13,7 +13,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     
     @IBOutlet weak var mapView: MKMapView!
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         StorageModel.sharedInstance().annotations.removeAll()
         StorageModel.sharedInstance().studentArray.removeAll()
@@ -32,7 +32,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
                 })
             } else {
                 var newError = "\(error)"
-                if newError.containsString("The Internet connection appears to be offline.") {
+                if newError.contains("The Internet connection appears to be offline.") {
                     newError = "No internet connection. Please try again"
                 }
                 self.displayError(newError, viewController: self)
@@ -79,17 +79,17 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     }
     
     // Creates a pin / annotation for the map view
-    func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         
         let reuseId = "pin"
         
-        var pinView = mapView.dequeueReusableAnnotationViewWithIdentifier(reuseId) as? MKPinAnnotationView
+        var pinView = mapView.dequeueReusableAnnotationView(withIdentifier: reuseId) as? MKPinAnnotationView
         
         if pinView == nil {
             pinView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: reuseId)
             pinView!.canShowCallout = true
-            pinView!.pinTintColor = UIColor.redColor()
-            pinView!.rightCalloutAccessoryView = UIButton(type: .DetailDisclosure)
+            pinView!.pinTintColor = UIColor.red
+            pinView!.rightCalloutAccessoryView = UIButton(type: .detailDisclosure)
         } else {
             pinView!.annotation = annotation
         }
@@ -99,12 +99,12 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     
     
     // Opens the url of the pin in Safari
-    func mapView(mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
+    func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
         if control == view.rightCalloutAccessoryView {
-            let app = UIApplication.sharedApplication()
+            let app = UIApplication.shared
             if let toOpen = view.annotation?.subtitle! {
                 if let url = makeValidURLString(toOpen) {
-                    app.openURL(NSURL(string: url)!)
+                    app.openURL(URL(string: url)!)
                 }
             }
         }

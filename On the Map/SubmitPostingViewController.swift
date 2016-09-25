@@ -26,27 +26,27 @@ class SubmitPostingViewController: UIViewController, MKMapViewDelegate, UITextFi
         userLocationMap.addAnnotation(userLocation)
         userLocationMap.showAnnotations(userLocationMap.annotations, animated: true)
         userLocationMap.camera.altitude *= 10
-        submitButton.setTitleColor(UIColor.darkGrayColor(), forState: UIControlState.Disabled)
+        submitButton.setTitleColor(UIColor.darkGray, for: UIControlState.disabled)
         buttonEnabled(button: submitButton, bool: false)
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        submitButton.backgroundColor = UIColor.clearColor()
+        submitButton.backgroundColor = UIColor.clear
         submitButton.layer.cornerRadius = 5
         submitButton.layer.borderWidth = 1.5
     }
     
-    @IBAction func submitUserLocationWithURL(sender: AnyObject) {
+    @IBAction func submitUserLocationWithURL(_ sender: AnyObject) {
         
         let student = StorageModel.sharedInstance().student
         
         ParseClient.sharedInstance().postStudentLocationForStudent(student) { (success, error) in
             if success {
-                self.performSegueWithIdentifier("submit", sender: sender)
+                self.performSegue(withIdentifier: "submit", sender: sender)
             } else {
                 var newError = "\(error!.localizedDescription)"
-                if newError.containsString("The Internet connection appears to be offline.") {
+                if newError.contains("The Internet connection appears to be offline.") {
                     newError = "No internet connection. Please try again"
                 }
                 self.displayError(newError, viewController: self)
@@ -54,17 +54,17 @@ class SubmitPostingViewController: UIViewController, MKMapViewDelegate, UITextFi
         }
     }
     
-    func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         
         let reuseId = "pin"
         
-        var pinView = mapView.dequeueReusableAnnotationViewWithIdentifier(reuseId) as? MKPinAnnotationView
+        var pinView = mapView.dequeueReusableAnnotationView(withIdentifier: reuseId) as? MKPinAnnotationView
         
         if pinView == nil {
             pinView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: reuseId)
             pinView!.canShowCallout = true
-            pinView!.pinTintColor = UIColor.redColor()
-            pinView!.rightCalloutAccessoryView = UIButton(type: .DetailDisclosure)
+            pinView!.pinTintColor = UIColor.red
+            pinView!.rightCalloutAccessoryView = UIButton(type: .detailDisclosure)
         } else {
             pinView!.annotation = annotation
         }
@@ -72,24 +72,24 @@ class SubmitPostingViewController: UIViewController, MKMapViewDelegate, UITextFi
         return pinView
     }
     
-    func mapView(mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
+    func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
         if control == view.rightCalloutAccessoryView {
-            let app = UIApplication.sharedApplication()
+            let app = UIApplication.shared
             if let toOpen = view.annotation?.subtitle! {
-                app.openURL(NSURL(string: toOpen)!)
+                app.openURL(URL(string: toOpen)!)
             }
         }
     }
     
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
     }
     
-    func textFieldDidEndEditing(textField: UITextField) {
+    func textFieldDidEndEditing(_ textField: UITextField) {
         guard let url = textField.text else {
-            submitButton.enabled = false
-            submitButton.layer.borderColor = UIColor.darkGrayColor().CGColor
+            submitButton.isEnabled = false
+            submitButton.layer.borderColor = UIColor.darkGray.cgColor
             displayError("No URL entered in textfield", viewController: self)
             print("No url entered in urlTextField")
             return
@@ -104,12 +104,12 @@ class SubmitPostingViewController: UIViewController, MKMapViewDelegate, UITextFi
         }
     }
     
-    func buttonEnabled(button button: UIButton, bool: Bool) {
-        button.enabled = bool
-        if button.enabled {
-            button.layer.borderColor = UIColor.whiteColor().CGColor
+    func buttonEnabled(button: UIButton, bool: Bool) {
+        button.isEnabled = bool
+        if button.isEnabled {
+            button.layer.borderColor = UIColor.white.cgColor
         } else {
-            button.layer.borderColor = UIColor.darkGrayColor().CGColor
+            button.layer.borderColor = UIColor.darkGray.cgColor
         }
     }
     

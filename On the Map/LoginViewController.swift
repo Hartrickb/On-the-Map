@@ -21,7 +21,7 @@ class LoginViewController: UIViewController {
         self.hideKeyboardWhenTappedAround()
     }
     
-    @IBAction func loginButton(sender: AnyObject) {
+    @IBAction func loginButton(_ sender: AnyObject) {
         
         performUIUpdatesOnMain { 
             self.uiWhileLoggingInEnabled(true)
@@ -43,19 +43,19 @@ class LoginViewController: UIViewController {
             } else {
                 var newErrorString = "\(error)"
                 
-                if newErrorString.containsString("The Internet connection appears to be offline.") {
+                if newErrorString.contains("The Internet connection appears to be offline.") {
                     newErrorString = "No internet connection. Please try again"
                 }
                 
-                if newErrorString.containsString("trails.Error 400: Missing parameter 'username'") {
+                if newErrorString.contains("trails.Error 400: Missing parameter 'username'") {
                     newErrorString = "Missing Username"
                 }
                 
-                if newErrorString.containsString("trails.Error 400: Missing parameter 'password'") {
+                if newErrorString.contains("trails.Error 400: Missing parameter 'password'") {
                     newErrorString = "Missing Password"
                 }
                 
-                if newErrorString.containsString("Account not found or invalid credentials.") {
+                if newErrorString.contains("Account not found or invalid credentials.") {
                     newErrorString = "Account not found or invalid credentials"
                 }
                 
@@ -67,22 +67,22 @@ class LoginViewController: UIViewController {
         }
     }
     
-    @IBAction func signUpButton(sender: AnyObject) {
-        if let url = NSURL(string: "https://www.udacity.com/account/auth#!/signup") {
-            UIApplication.sharedApplication().openURL(url)
+    @IBAction func signUpButton(_ sender: AnyObject) {
+        if let url = URL(string: "https://www.udacity.com/account/auth#!/signup") {
+            UIApplication.shared.openURL(url)
         }
     }
     
     func completeLogin() {
-        let controller = storyboard!.instantiateViewControllerWithIdentifier("NavigationController") as! UINavigationController
-        presentViewController(controller, animated: true, completion: nil)
+        let controller = storyboard!.instantiateViewController(withIdentifier: "NavigationController") as! UINavigationController
+        present(controller, animated: true, completion: nil)
     }
     
     
-    func uiWhileLoggingInEnabled(enabled: Bool) {
-        emailTextField.enabled = !enabled
-        passwordTextField.enabled = !enabled
-        loginButton.enabled = !enabled
+    func uiWhileLoggingInEnabled(_ enabled: Bool) {
+        emailTextField.isEnabled = !enabled
+        passwordTextField.isEnabled = !enabled
+        loginButton.isEnabled = !enabled
         if enabled {
             loginActivityIndicator.startAnimating()
         } else {

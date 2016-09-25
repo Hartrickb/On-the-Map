@@ -13,23 +13,23 @@ import UIKit
 extension UIViewController {
     
     // Displays an error message
-    func displayError(errorMessage: String, viewController: UIViewController) {
-        let alert = UIAlertController(title: "Error", message: errorMessage, preferredStyle: .Alert)
-        alert.addAction(UIAlertAction(title: "Ok", style: .Default, handler: nil))
-        viewController.presentViewController(alert, animated: true, completion: nil)
+    func displayError(_ errorMessage: String, viewController: UIViewController) {
+        let alert = UIAlertController(title: "Error", message: errorMessage, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+        viewController.present(alert, animated: true, completion: nil)
     }
     
     // Takes a user entered url and makes it a valid url
-    func makeValidURLString(urlString: String) -> String? {
+    func makeValidURLString(_ urlString: String) -> String? {
         
         var validURLString: String?
         
-        func validateURL (stringURL : String) -> Bool {
+        func validateURL (_ stringURL : String) -> Bool {
             
             let urlRegEx = "((https|http)://)((\\w|-)+)(([.]|[/])((\\w|-)+))+"
             let predicate = NSPredicate(format:"SELF MATCHES %@", argumentArray:[urlRegEx])
             
-            return predicate.evaluateWithObject(stringURL)
+            return predicate.evaluate(with: stringURL)
         }
         
         if urlString == "" {
@@ -38,15 +38,15 @@ extension UIViewController {
             return validURLString
         }
         
-        if urlString.characters.count < 8 && urlString.characters.count > 0 {
-            validURLString = "https://" + urlString
-        } else {
-            if urlString[0...7].lowercaseString == "https://" || urlString[0...6].lowercaseString == "http://"{
-                validURLString = urlString
-            } else {
-                validURLString = "https://" + urlString
-            }
-        }
+//        if urlString.characters.count < 8 && urlString.characters.count > 0 {
+//            validURLString = "https://" + urlString
+//        } else {
+//            if urlString[0...7].lowercased() == "https://" || urlString[0...6].lowercased() == "http://"{
+//                validURLString = urlString
+//            } else {
+//                validURLString = "https://" + urlString
+//            }
+//        }
         
         if validateURL(validURLString!) {
             return validURLString
